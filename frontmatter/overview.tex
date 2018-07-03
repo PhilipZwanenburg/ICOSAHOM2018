@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overview}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Motivation and Goals}
+
+The success of Bubnov-Galerkin finite element methods for the solution of elliptic partial differential equations (PDEs) arises from the relation between the variational formulations and the minimization of an energy functional. 
+\\~
+
+In the case of convection-dominated or purely hyperbolic PDEs, additional stabilization is required in regions of high local P\'eclet number and is most commonly introduced either through the introduction of a suitably chosen numerical flux or through the modification of the test space (resulting in a Petrov-Galerkin method).
+\\~
+
+Taking the linear advection equation as a model problem, our goal is to present our initial investigation into determining the \emph{optimal} form of stabilization. 
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Outline}
+
+\begin{itemize}
+\item Presentation of methods and related theory:
+\begin{itemize}
+\item Discontinuous Galerkin method with upwind numerical flux;
+\item Discontinuous Petrov-Galerkin method with various test norms~\cite{Demkowicz2011};
+\item Optimal Trial Petrov-Galerkin method~\cite{Brunken2018}.
+\end{itemize}
+\item Convergence analysis in relation to discrete inf-sup stability.
+\item Numerical results in one and two dimensions.
+\item Discussion of limitations and future directions.
+\end{itemize}
+
+\end{frame}

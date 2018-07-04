@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DG}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Discontinuous Galerkin (DG) Method}
+
+The DG method with upwind numerical flux corresponds to:
+\begin{align}
+b(v,u)
+=\ & \sum_{\fe{V}} \int_{\fe{V}} - \nabla v \cdot \varv{b} u\ d\omega
++ \sum_{\fe{F}} \int_{\fe{F}} \jump{v} f^*\ d\gamma,
+\end{align}
+
+where $f^* = \varv{\hat{n}} \cdot \varv{b} u_\text{upwind}$. Equivalently,
+\begin{align}
+b(v,u)
+=\ & \sum_{\fe{V}} \int_{\fe{V}} - \nabla v \cdot \varv{b} u\ d\omega \\
+  +\ & \sum_{\fe{F}} \int_{\fe{F}} \jump{v}
+       \left(
+       (\varv{b} \cdot \varv{\hat{n}}) \avg{u} +
+       \frac{1}{2} |\varv{b} \cdot \varv{\hat{n}}| \jump{u}
+       \right) d\gamma.
+\end{align}
+
+\begin{itemize}
+  \item Central flux term for discrete coercivity in $||v||^2_\text{cf} =
+    ||v||^2_{\fspace{L}^2(\Omega)} + \int_{\partial \Omega} \frac{1}{2}
+    |\varv{b} \cdot \varv{\hat{n}}| v^2\ d\Gamma$.
+  \item Additional penalization term added to strengthen the stability such that
+    improved error estimates are obtained.
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The DG Method - Coercivity Norms}
+
+Discrete coercivity leading to a quasi-optimal error estimate can be proven
+using the following norm
+\begin{align}
+  ||v||^2_\text{uw$_1$}
+  =\ &
+  ||v||^2_{\fspace{L}^2(\Omega)}
+  +
+  \int_{\partial \Omega} \frac{1}{2} |\varv{b} \cdot \varv{\hat{n}}| v^2\ d\Gamma \\
+  +\ &
+  \sum_{\fe{F}} \int_{\fe{F}} \frac{1}{2} |\varv{b} \cdot \varv{\hat{n}}| \jump{v}^2 d\gamma
+  +
+  \sum_{\fe{V}} h_\fe{V} || \varv{b} \cdot \nabla v ||^2_{\fspace{L^2(\fe{V})}}.
+\end{align}
+
+Continuity requires the addtional terms
+
+\begin{align}
+  ||v||^2_\text{uw$_2$}
+  =
+  ||v||^2_\text{uw$_1$}
+  +
+  \sum_{\fe{V}} \left( h_\fe{V}^{-1} || v ||^2_{\fspace{L^2(\fe{V})}} + || v ||^2_{\fspace{L^2(\partial \fe{V})}} \right).
+\end{align}
+
+Reference: Di Pietro et al.~\cite{DiPietro2011}.
+
+\end{frame}

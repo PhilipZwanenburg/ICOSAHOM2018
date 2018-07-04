@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{OPG}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Optimal Trial Petrov-Galerkin (OPG) Method}
+
+Brunken et al. (2018)~\cite{Demkowicz2011}.
+\\~
+
+Similar motivation to that of the DPG method but with test norm
+chosen as that which is naturally induced by the problem such that the method is
+optimal in the sense of having unity continuity and inf-sup constants, and a
+trial norm corresponding to the L2 norm.
+\\~
+
+Main difference, global solve for the optimal test space followed by computation
+of discrete trial space through the application of the adjoint operator.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The OPG Method - Formulation}
+
+Cauchy-Schwarz on bilinear form:
+\begin{align} \label{eq:cauchy_scwarz_advection}
+b(v,\varg{u})
+\le\ & \sum_{\fe{V}}
+|| - \nabla v \cdot \varv{b} ||_{L^2(\fe{V})} || u ||_{L^2(\fe{V})}
++
+||\jump{v}||_{L^2(\fe{F})} ||f^*||_{L^2(\fe{F})} \\
+\le\ &
+\underbrace{\left(
+\sum_{\fe{V}} || - \nabla v \cdot \varv{b} ||^2_{L^2(\fe{V})} + ||\jump{v}||^2_{L^2(\fe{F})}
+\right)^\frac{1}{2}}_{||v||_\fspace{V}}
+       \times \\
+  &
+\underbrace{\left(
+\sum_{\fe{V}} || u ||^2_{L^2(\fe{V})} + ||f^*||^2_{L^2(\fe{F})}
+\right)^\frac{1}{2}}_{||u||_\fspace{U}}.
+\end{align}
+
+Equality obtained (unity continuity and inf-sup constants) for the choice of
+test functions:
+\begin{alignat}{3}
+u =\ & -\nabla v_u \cdot \vect{b}\quad && \text{in}\ \fe{V}, \\
+f^* =\ & \jump{v_u} && \text{on}\ \fe{F}.
+\end{alignat}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The OPG Method - Formulation}
+
+In this case, a conforming test space is selected and the common flux component
+of the group variable eliminated.
+\\~
+
+Imposing sufficient constraints on the test space,
+\begin{align}
+  \exists\ \text{a unique}\ v_u \in \fspace{V}\ \text{such that}\ u = B^*v,\ \forall u \in \fspace{U}.
+\end{align}
+
+The equivalent problem can then be obtained:
+\begin{align}
+& \text{Find}\ w_h(u_h) \in \fspace{V}_h\ \text{such that}\\
+& b(v_h,u_h) \coloneqq b(v_h,B^*w_h) \coloneqq (B^*v_h,B^*w_h) = l(v_h)\ \forall v_h \in \fspace{V}_h,
+\end{align}
+
+and subsequently compute the solution.
+
+\end{frame}

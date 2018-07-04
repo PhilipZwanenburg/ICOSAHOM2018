@@ -1,0 +1,37 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Model Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Model Problem - Steady Linear Advection}
+
+\begin{subequations}
+\begin{align}
+& \varv{b} \cdot \nabla \vars{u} = s && \text{in}\ \Omega, \label{eq:linear_advection_omega} \\
+& u = u_{\Gamma^{\text{-}}}\ && \text{on}\ \Gamma^{\text{-}} \coloneqq \{ \varv{x} \in \partial\Omega : \varv{\hat{n}} \cdot \vect{b} < 0 \}.
+\end{align}
+\end{subequations}
+
+Weak formulation:
+\begin{subequations} \label{eq:variational_form_advection}
+\begin{align}
+b(v,\varg{u})
+=\ & \sum_{\fe{V}}
+\int_{\fe{V}} - \nabla v \cdot \varv{b} u\ d\omega +
+\int_{\partial\fe{V} \setminus \Gamma^{\text{-}}} v f^*\ d\gamma, \label{eq:bilinear_pg_advection} \\
+l(v)
+=\ & \sum_{\fe{V}} \int_{\fe{V}} v s\ d\omega + \int_{\fe{F} \cap \Gamma^{\text{-}}} v f_{\Gamma^{\text{-}}}\ d\gamma.
+\label{eq:bilinear_pg_advection_l}
+\end{align}
+\end{subequations}
+
+Convenient reformulation:
+\begin{align} \label{eq:bilinear_pg_advection_jump}
+b(v,\varg{u})
+=\ & \sum_{\fe{V}} \int_{\fe{V}} - \nabla v \cdot \varv{b} u\ d\omega
++ \sum_{\fe{F}} \int_{\fe{F}} \jump{v} f^*\ d\gamma, \\
+l(v)
+=\ & \sum_{\fe{V}} \int_{\fe{V}} v s\ d\omega.
+\end{align}
+
+\end{frame}

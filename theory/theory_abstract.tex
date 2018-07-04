@@ -1,0 +1,141 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Theory}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Abstract Setting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Continuous}
+
+Consider the \emph{linear} abstract variational problem
+\begin{align} \label{eq:bilinear_abstract_infinite}
+\text{Find}\ u \in \fspace{U}\ \text{such that}\
+b(v,u) = l(v)\ \forall v \in \fspace{V}.
+\end{align}
+
+We have the standard requirements:
+\begin{align}
+| b(v,u) | \le M
+||v||_{\fspace{V}}
+||u||_{\fspace{U}},
+\end{align}
+\begin{align} \label{eq:inf_sup_infinite}
+\exists \gamma > 0 :
+\adjustlimits\inf_{u\in\fspace{U}} \sup_{v\in\fspace{V}}
+\frac{b(v,u)}{||v||_{\fspace{V}}||u||_{\fspace{U}}} \ge \gamma,
+\end{align}
+
+and
+\begin{align}
+l(v) = 0\ \forall v \in \fspace{V}_0,\ \text{where}\ \fspace{V}_0 \coloneqq \{v \in \fspace{V} : b(v,u) = 0\ \forall u
+\in \fspace{U} \}.
+\end{align}
+
+Then by the Banach-Ne\v{c}as-Babu\v{s}ka theorem,
+\begin{align}
+||u||_{\fspace{U}} \le \frac{M}{\gamma} ||l||_{\fspace{V}'}.
+\end{align}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Discrete}
+
+Choosing finite dimensional subsets we have the discrete variational problem,
+\begin{align} \label{eq:bilinear_abstract_finite}
+\text{Find}\ u_h \in \fspace{U}_h\ \text{such that}\
+b(v_h,u_h) = l(v_h)\ \forall v_h \in \fspace{V}_h.
+\end{align}
+
+If a discrete version of the inf-sup condition holds,
+\begin{align} \label{eq:abstract_dpg_error}
+||u-u_h||_{\fspace{U}} \le \frac{M}{\gamma_h} \inf_{w_h \in \fspace{U}_h} ||u-w_h||_{\fspace{U}}.
+\end{align}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Quick Proof}
+
+Beginning with the discrete inf-sup condition we have, for all $w_h \in \fspace{U}_h$,
+\begin{align}
+  \gamma_h ||w_h-u_h||_\fspace{U}
+  & \le \sup_{v_h\in\fspace{V_h}} \frac{b(v_h,w_h-u_h)}{||v_h||_\fspace{V}} \\
+  & = \sup_{v_h\in\fspace{V_h}} \frac{b(v_h,w_h-u)+b(v_h,u-u_h)}{||v_h||_\fspace{V}} \\
+  & = \sup_{v_h\in\fspace{V_h}} \frac{b(v_h,w_h-u)}{||v_h||_\fspace{V}} \\
+  & \le \sup_{v_h\in\fspace{V_h}} \frac{M ||v_h||_\fspace{V}||w_h-u||_\fspace{U}}{||v_h||_\fspace{V}} \\
+  & = M ||w_h-u||_\fspace{U}.
+\end{align}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Quick Proof}
+
+Using the triangle inequality and that above we thus find
+\begin{align}
+  ||u_h-u||_\fspace{U}
+  & \le || u_h-w_h ||_\fspace{U} + || w_h-u ||_\fspace{U}\ && \forall w_h \in \fspace{U}_h \\
+  & \le \frac{M}{\gamma_h} || w_h-u ||_\fspace{U} + || w_h-u ||_\fspace{U}\ && \forall w_h \in \fspace{U}_h \\
+  & = \left(1 + \frac{M}{\gamma_h}\right) || w_h-u ||_\fspace{U}\ && \forall w_h \in \fspace{U}_h \\
+  \rightarrow
+  ||u_h-u||_\fspace{U} & \le \left(1 + \frac{M}{\gamma_h}\right) \inf_{w_h \in \fspace{U}_h}|| w_h-u ||_\fspace{U},
+\end{align}
+
+where the 1 can be removed in the Hilbert space setting~\cite{Xu2003}.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Selection of Norms}
+
+A case of particular interest:
+\begin{align} \label{eq:equal_m_gamma}
+M = \gamma_h.
+\end{align}
+
+\begin{itemize}
+  \item Error incurred by the discrete approximation is smallest.
+\end{itemize}
+\vspace{5mm}
+
+Bui-Thanh et al.~\cite[Theorem \makeblue{2.6}]{BuiThanh2013} have proven that
+\begin{align} \label{eq:bui_thanh_2-6}
+M = \gamma_h = 1
+\iff
+\exists v_u \in \fspace{V}\ \setminus \{0\} :
+b(v_u,u) = ||v_u||_{\fspace{V}} ||u||_{\fspace{U}}\ \forall u \in \fspace{U},
+\end{align}
+
+where $v_u$ is termed an optimal test function for the trial function $u$.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Selection of Norms}
+
+One choice of strategy is to select the norm which is naturally induced by the
+problem. Defining the map from trial to test space,
+$T: \fspace{U} \ni u \rightarrow Tu \coloneqq v_{Tu} \in \fspace{V} $, by
+\begin{align}
+(v_{Tu},Tu)_{\fspace{V}} = b(v,u),
+\end{align}
+
+then
+\begin{align} \label{eq:def_discrete_test_space_alt}
+\fspace{V}_\text{opt} = \{ v_{T u} \in \fspace{V} : u \in \fspace{U} \}.
+\end{align}
+
+In the discrete trial space optimal test functions are determined according to
+\begin{align} \label{eq:auxiliary_opt_v}
+\text{Find}\ v_{T u_h} \in \fspace{V}\ \text{such that}\
+(w,v_{T u_h})_{\fspace{V}} = b(w,u_h),\ \forall w \in \fspace{V}.
+\end{align}
+
+\end{frame}

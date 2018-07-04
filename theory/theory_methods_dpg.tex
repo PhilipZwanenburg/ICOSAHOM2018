@@ -1,0 +1,100 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DPG}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Discontinuous Petrov-Galerkin (DPG) Method}
+
+Demkowicz et al. (2010)~\cite{Demkowicz2011}.
+\\~
+
+Motivated by optimal solution convergence in the $\fspace{L}^2$ norm, we would like
+to move gradients in the bilinear form to the test space.
+\\~
+
+From the formal $L^2$-adjoint and a bilinear form representing the boundary terms
+\begin{align}
+b(v,u) = b^*(v,u) + c(\text{tr}_A^* v, \text{tr}_A u)
+\end{align}
+
+we obtrain the graph space for the adjoint
+\begin{align}
+\fspace{H}_b^*(\Omega) \coloneqq
+\{ v \in (L^2(\Omega)) : B^*v \in (L^2(\Omega))\ \forall u \in \fspace{U} \}.
+\end{align}
+
+When setting $\fspace{V} = \fspace{H}_b^*(\Omega)$, we say that the test space
+is $\fspace{H}_b$-conforming.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The DPG Method - Broken Test Space}
+
+No assumptions yet made regarding conformity of trial and test spaces.
+\\~
+
+The goal of the methodology is to solve for the solution over a tessellation,
+$\mathcal{T}_h$, of the discretized domain, $\Omega_h$, consisting of elements
+(referred to as volumes), $\fe{V}$.
+\\~
+
+To make the method practical, the DPG method uses broken test spaces such that
+test functions can be computed elementwise,
+\begin{align} \label{eq:auxiliary_opt_v_infinite}
+\text{Find}\ v_{T u_h} \in \fspace{V}(\fe{V})\ \text{such that}\
+(w,v_{T u_h})_{\fspace{V}(\fe{V})} = b(w,u_h),\ \forall w \in \fspace{V}(\fe{V})
+\end{align}
+
+where
+\begin{align}
+\fspace{V}(\Omega_h)
+&\coloneqq
+\{ v \in L^2(\Omega) : v|_{\fe{V}} \in \fspace{H}_b^*(\fe{V})\
+   \forall \fe{V} \in \mathcal{T}_h \}, \\
+(w,v)_{\fspace{V}(\Omega_h)}
+&\coloneqq
+\sum_{\fe{V}} (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}.
+\end{align}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The DPG Method - Investigated Norms}
+
+$\fspace{L}^2: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}
+  = (w|_{\fe{V}},v|_{\fe{V}}) $.
+\\~
+
+$\fspace{H}^1: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}
+  = (w|_{\fe{V}},v|_{\fe{V}}) +(\nabla w|_{\fe{V}},\nabla v|_{\fe{V}})$.
+\\~
+
+$\fspace{H}^1_\varv{b}: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}
+  = (w|_{\fe{V}},v|_{\fe{V}}) +(\varv{b} \cdot \nabla w|_{\fe{V}},\varv{b} \cdot \nabla v|_{\fe{V}})$.
+\\~
+
+$\fspace{H}^+_\varv{b}: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})} =
+  \langle w|_{\fe{V}},|\varv{b} \cdot \varv{\hat{n}}| v_{\fe{V}} \rangle_{\partial \fe{V}^+} +(\varv{b} \cdot \nabla w|_{\fe{V}},\varv{b} \cdot \nabla v|_{\fe{V}})$.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Discontinuous Petrov-Galerkin Method}
+
+Additional characteristics:
+\begin{itemize}
+  \item General Petrov-Galerkin methodology outlined in the abstract setting is
+    a subset of the practical DPG methodology. When both formulations are
+    uniquely solvable, their solutions coincide.
+  \item The required selection of a suitable numerical flux has been replaced
+    with the required selection of a suitable test norm.
+  \item When also using a discontinuous trial space, additional trace unknowns
+    are introduced allowing for static condensation of volume unknowns in the
+    global solve.
+\end{itemize}
+
+\end{frame}

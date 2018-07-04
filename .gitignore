@@ -6,4 +6,6 @@
 *.snm
 *.synctex.gz
 *.toc
+
+*.el
 *.swp

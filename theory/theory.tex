@@ -1,6 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Theory}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Abstract Setting}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Abstract Functional Setting - Continuous}
@@ -34,6 +37,9 @@ Then by the Banach-Ne\v{c}as-Babu\v{s}ka theorem,
 ||u||_{\fspace{U}} \le \frac{M}{\gamma} ||l||_{\fspace{V}'}.
 \end{align}
 
+\makered{Add elaboration of optimal convergence from Bathe based on inf-sup
+  (more time )}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,9 +57,36 @@ If a discrete version of the inf-sup condition holds,
 ||u-u_h||_{\fspace{U}} \le \frac{M}{\gamma_h} \inf_{w_h \in \fspace{U}_h} ||u-w_h||_{\fspace{U}}.
 \end{align}
 
-A case of particular interest:
-\begin{align} \label{eq:equal_m_gamma}
-M = \gamma_h.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Quick Proof}
+
+Beginning with the discrete inf-sup condition we have, for all $w_h \in \fspace{U}_h$,
+\begin{align}
+  \gamma_h ||w_h-u_h||_\fspace{U}
+  & \le \sup_{v_h\in\fspace{V_h}} \frac{b(v_h,w_h-u_h)}{||v_h||_\fspace{V}} \\
+  & = \sup_{v_h\in\fspace{V_h}} \frac{b(v_h,w_h-u)+b(v_h,u-u_h)}{||v_h||_\fspace{V}} \\
+  & = \sup_{v_h\in\fspace{V_h}} \frac{b(v_h,w_h-u)}{||v_h||_\fspace{V}} \\
+  & \le \sup_{v_h\in\fspace{V_h}} \frac{M ||v_h||_\fspace{V}||w_h-u||_\fspace{U}}{||v_h||_\fspace{V}} \\
+  & = M ||w_h-u||_\fspace{U}.
+\end{align}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Quick Proof}
+
+Using the triangle inequality and that above we thus find
+\begin{align}
+  ||u_h-u||_\fspace{U}
+  & \le || u_h-w_h ||_\fspace{U} + || w_h-u ||_\fspace{U}\ && \forall w_h \in \fspace{U}_h \\
+  & \le \frac{M}{\gamma_h} || w_h-u ||_\fspace{U} + || w_h-u ||_\fspace{U}\ && \forall w_h \in \fspace{U}_h \\
+  & = \left(1 + \frac{M}{\gamma_h}\right) || w_h-u ||_\fspace{U}\ && \forall w_h \in \fspace{U}_h \\
+  \rightarrow
+  ||u_h-u||_\fspace{U} & \le \left(1 + \frac{M}{\gamma_h}\right) \inf_{w_h \in \fspace{U}_h}|| w_h-u ||_\fspace{U}.
 \end{align}
 
 \end{frame}
@@ -62,8 +95,17 @@ M = \gamma_h.
 \begin{frame}
 \frametitle{Abstract Functional Setting - Selection of Norms}
 
-Natural strategy to choose the norm which is naturally induced by the problem. Bui-Thanh
-et al.~\cite[Theorem \makeblue{2.6}]{BuiThanh2013}:
+A case of particular interest:
+\begin{align} \label{eq:equal_m_gamma}
+M = \gamma_h.
+\end{align}
+
+\begin{itemize}
+  \item Error incurred by the discrete approximation is smallest.
+\end{itemize}
+\vspace{5mm}
+
+Bui-Thanh et al.~\cite[Theorem \makeblue{2.6}]{BuiThanh2013} have proven that
 \begin{align} \label{eq:bui_thanh_2-6}
 M = \gamma_h = 1
 \iff
@@ -71,8 +113,17 @@ M = \gamma_h = 1
 b(v_u,u) = ||v_u||_{\fspace{V}} ||u||_{\fspace{U}}\ \forall u \in \fspace{U},
 \end{align}
 
-where $v_u$ is termed an optimal test function for the trial function $u$. Defining the map from trial to test space, $T :
-\fspace{U} \ni u \rightarrow Tu \coloneqq v_{Tu} \in \fspace{V} $, by
+where $v_u$ is termed an optimal test function for the trial function $u$.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Abstract Functional Setting - Selection of Norms}
+
+One choice of strategy is to select the norm which is naturally induced by the
+problem. Defining the map from trial to test space,
+$T: \fspace{U} \ni u \rightarrow Tu \coloneqq v_{Tu} \in \fspace{V} $, by
 \begin{align}
 (v_{Tu},Tu)_{\fspace{V}} = b(v,u),
 \end{align}
@@ -82,10 +133,104 @@ then
 \fspace{V}_\text{opt} = \{ v_{T u} \in \fspace{V} : u \in \fspace{U} \}.
 \end{align}
 
+In the discrete trial space optimal test functions are determined according to
+\begin{align} \label{eq:auxiliary_opt_v}
+\text{Find}\ v_{T u_h} \in \fspace{V}\ \text{such that}\
+(w,v_{T u_h})_{\fspace{V}} = b(w,u_h),\ \forall w \in \fspace{V}.
+\end{align}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Methods}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DPG}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Discontinuous Petrov-Galerkin (DPG) Method}
+
+Motivated by optimal solution convergence in the $\fspace{L}^2$ norm, we would like
+to move gradients in the bilinear form to the test space.
+\\~
+
+From the formal $L^2$-adjoint and a bilinear form representing the boundary terms
+\begin{align}
+b(v,u) = b^*(v,u) + c(\text{tr}_A^* v, \text{tr}_A u)
+\end{align}
+
+we obtrain the graph space for the adjoint
+\begin{align}
+\fspace{H}_b^*(\Omega) \coloneqq
+\{ v \in (L^2(\Omega)) : b^*(v,u) \in (L^2(\Omega))\ \forall u \in \fspace{U} \}.
+\end{align}
+
+When setting $\fspace{V} = \fspace{H}_b^*(\Omega)$, we say that the test space is $\fspace{H}_b$-conforming.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Discontinuous Petrov-Galerkin Method}
+
+No assumptions yet made regarding conformity of trial and test spaces.
+\\~
+
+The goal of the methodology is to solve for the solution over a tessellation,
+$\mathcal{T}_h$, of the discretized domain, $\Omega_h$, consisting of elements (referred to as volumes), $\fe{V}$.
+\\~
+
+To make the method practical, the DPG method uses broken test spaces such that
+test functions can be computed elementwise,
+\begin{align} \label{eq:auxiliary_opt_v_infinite}
+\text{Find}\ v_{T u_h} \in \fspace{V}(\fe{V})\ \text{such that}\
+(w,v_{T u_h})_{\fspace{V}(\fe{V})} = b(w,u_h),\ \forall w \in \fspace{V}(\fe{V})
+\end{align}
+
+where
+\begin{align}
+\fspace{V}(\Omega_h)
+&\coloneqq
+\{ v \in L^2(\Omega) : v|_{\fe{V}} \in \fspace{H}_b^*(\fe{V})\ \forall \fe{V} \in \mathcal{T}_h \}, \\
+(w,v)_{\fspace{V}(\Omega_h)}
+&\coloneqq
+\sum_{\fe{V}} (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}.
+\end{align}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Discontinuous Petrov-Galerkin Method}
+
+Characteristics:
+\begin{itemize}
+  \item General Petrov-Galerkin methodology outlined in the abstract setting is
+    a subset of the practical DPG methodology. When both formulations are
+    uniquely solvable, their solutions coincide.
+  \item The required selection of a suitable numerical flux has been replaced
+    with the required selection of a suitable test norm.
+  \item When also using a discontinuous trial space, additional trace unknowns
+    are introduced allowing for static condensation of volume unknowns in the
+    global solve.
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{OPG}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Optimal Trial Petrov-Galerkin Method}
+
+\makered{Follow the presentation of Di Pietro}.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DG}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
@@ -97,4 +242,3 @@ then
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discrete inf-sup Testing}
-

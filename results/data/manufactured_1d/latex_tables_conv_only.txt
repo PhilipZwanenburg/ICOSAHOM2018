@@ -1,0 +1,27 @@
+\begin{table}[!ht]
+\begin{center}
+\caption{Convergence Orders - {\color{red} TODO Mesh Type} Meshes  {\color{red} TODO Data Type}}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{| l | c | c c c c c | }
+	\hline
+	\multicolumn{2}{|c|}{} & \multicolumn{5}{c|}{Conv. Order} \\
+	\hline
+	Order ($p$) & Mesh Size ($h$) & $L^2 (u)_{L^2}$ & $L^2 (u)_{\text{OPG}}$ & $L^2 (u)_{\text{DPG} - H_b^1}$ & $L^2 (u)_{\text{DPG} - H_b^-}$ & $L^2 (u)_{\text{DG}}$ \\
+	\hline
+0	& 2.50e-01 & -    & -    & -    & -    & -    \\
+	& 1.25e-01 & 0.95 & -    & 0.98 & 0.98 & 1.08 \\
+	& 6.25e-02 & 0.99 & -    & 1.06 & 1.06 & 1.04 \\
+	\hline
+1	& 1.25e-01 & -    & -    & -    & -    & -    \\
+	& 6.25e-02 & 2.00 & 2.00 & 2.14 & 2.14 & 2.00 \\
+	& 3.12e-02 & 2.00 & 2.00 & 2.06 & 2.06 & 2.00 \\
+	\hline
+2	& 8.33e-02 & -    & -    & -    & -    & -    \\
+	& 4.17e-02 & 2.96 & 2.96 & 2.95 & 2.95 & 2.99 \\
+	& 2.08e-02 & 2.99 & 2.99 & 3.01 & 3.01 & 3.00 \\
+	\hline
+\end{tabular}
+}
+\end{center}
+\end{table}
+

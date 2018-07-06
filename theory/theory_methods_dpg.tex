@@ -62,28 +62,18 @@ where
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{The DPG Method - Investigated Norms}
+\frametitle{The Discontinuous Petrov-Galerkin Method}
 
-$\fspace{L}^2: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}
-  = (w|_{\fe{V}},v|_{\fe{V}}) $.
-\\~
-
-$\fspace{H}^1: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}
-  = (w|_{\fe{V}},v|_{\fe{V}}) +(\nabla w|_{\fe{V}},\nabla v|_{\fe{V}})$.
+Investigated norms:
 \\~
 
 $\fspace{H}^1_\varv{b}: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})}
   = (w|_{\fe{V}},v|_{\fe{V}}) +(\varv{b} \cdot \nabla w|_{\fe{V}},\varv{b} \cdot \nabla v|_{\fe{V}})$.
 \\~
 
-$\fspace{H}^+_\varv{b}: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})} =
-  \langle w|_{\fe{V}},|\varv{b} \cdot \varv{\hat{n}}| v_{\fe{V}} \rangle_{\partial \fe{V}^+} +(\varv{b} \cdot \nabla w|_{\fe{V}},\varv{b} \cdot \nabla v|_{\fe{V}})$.
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{The Discontinuous Petrov-Galerkin Method}
+$\fspace{H}^-_\varv{b}: (w|_{\fe{V}},v|_{\fe{V}})_{\fspace{V}(\fe{V})} =
+  h \langle w|_{\fe{V}},|\varv{b} \cdot \varv{\hat{n}}| v_{\fe{V}} \rangle_{\partial \fe{V}^-} +(\varv{b} \cdot \nabla w|_{\fe{V}},\varv{b} \cdot \nabla v|_{\fe{V}})$.
+\\~
 
 Additional characteristics:
 \begin{itemize}

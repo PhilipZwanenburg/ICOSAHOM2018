@@ -9,13 +9,11 @@ Brunken et al. (2018)~\cite{Demkowicz2011}.
 \\~
 
 Similar motivation to that of the DPG method but with test norm
-chosen as that which is naturally induced by the problem such that the method is
-optimal in the sense of having unity continuity and inf-sup constants, and a
-trial norm corresponding to the L2 norm.
-\\~
-
-Main difference, global solve for the optimal test space followed by computation
-of discrete trial space through the application of the adjoint operator.
+chosen as that which is naturally induced by the problem such that:
+\begin{itemize}
+\item the trial norm corresponds to the L2 norm, and
+\item the continuity and inf-sup constants take values of 1!
+\end{itemize}
 
 \end{frame}
 
@@ -66,5 +64,10 @@ The equivalent problem can then be obtained:
 \end{align}
 
 and subsequently compute the solution.
+\\~
+
+Main difference with DPG: solve for the optimal test function, having global
+support, followed by the computation of discrete trial space through the
+application of the adjoint operator.
 
 \end{frame}

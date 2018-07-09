@@ -10,14 +10,11 @@ Demkowicz et al. (2010)~\cite{Demkowicz2011}.
 
 Motivated by optimal solution convergence in the $\fspace{L}^2$ norm, we would like
 to move gradients in the bilinear form to the test space.
-\\~
-
-From the formal $L^2$-adjoint and a bilinear form representing the boundary terms
 \begin{align}
-b(v,u) = b^*(v,u) + c(\text{tr}_A^* v, \text{tr}_A u)
+b(v,u) = b^*(v,u) + c(\text{tr}_A^* v, \text{tr}_A u).
 \end{align}
 
-we obtrain the graph space for the adjoint
+Graph space for the adjoint:
 \begin{align}
 \fspace{H}_b^*(\Omega) \coloneqq
 \{ v \in (L^2(\Omega)) : B^*v \in (L^2(\Omega))\ \forall u \in \fspace{U} \}.
@@ -35,10 +32,10 @@ is $\fspace{H}_b$-conforming.
 No assumptions yet made regarding conformity of trial and test spaces.
 \\~
 
-The goal of the methodology is to solve for the solution over a tessellation,
-$\mathcal{T}_h$, of the discretized domain, $\Omega_h$, consisting of elements
-(referred to as volumes), $\fe{V}$.
-\\~
+% The goal of the methodology is to solve for the solution over a tessellation,
+% $\mathcal{T}_h$, of the discretized domain, $\Omega_h$, consisting of elements
+% (referred to as volumes), $\fe{V}$.
+% \\~
 
 To make the method practical, the DPG method uses broken test spaces such that
 test functions can be computed elementwise,

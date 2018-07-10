@@ -12,3 +12,5 @@
 *.el
 *.swp
 *.odt#
+
+Makefile

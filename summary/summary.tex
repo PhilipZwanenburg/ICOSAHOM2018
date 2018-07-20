@@ -1,0 +1,217 @@
+% ICOSAHOM London July 2018 Conference : Presentation
+% Philip Zwanenburg, McGill University, Montreal, QC, Canada
+
+\documentclass[]{article}
+
+\input{../preamble/packages}
+\input{../preamble/additional}
+\input{../preamble/commands}
+\usepackage[margin=0.5in]{geometry}
+
+\begin{document}
+
+\title{On the Selection of Finite Element Test Norms based on their Optimal Stabilization and Convergence Properties}
+\author{
+Philip Zwanenburg \and
+Siva Nadarajah
+}
+
+\maketitle
+
+The success of standard Galerkin finite element methods for the solution of
+elliptic partial differential equations (PDEs) arises from the relation between
+the variational formulations and the minimization of an energy functional.
+In the case of convection-dominated or purely hyperbolic PDEs, additional
+stabilization is required in regions of high local P\'eclet or Reynolds number.
+While the need for this stabilization is understood, the specific form which it
+should take in order to guarantee both stable and optimally convergent
+discretizations is not generally provided.
+The goal of this work is to devise schemes for which the stabilization is
+optimal in the sense that the computed solution is given by the $\fspace{L}^2$ projection of
+the exact solution.
+
+Consider the linear abstract variational problem
+\begin{align} \label{eq:bilinear_abstract_infinite}
+\text{Find}\ u \in \fspace{U}\ \text{such that}\
+b(v,u) = l(v)\ \forall v \in \fspace{V}.
+\end{align}
+
+We have the standard requirements:
+\begin{align}
+| b(v,u) | \le M
+||v||_{\fspace{V}}
+||u||_{\fspace{U}},
+\end{align}
+\begin{align} \label{eq:inf_sup_infinite}
+\exists \gamma > 0 :
+\adjustlimits\inf_{u\in\fspace{U}} \sup_{v\in\fspace{V}}
+\frac{b(v,u)}{||v||_{\fspace{V}}||u||_{\fspace{U}}} \ge \gamma,
+\end{align}
+
+and
+\begin{align}
+l(v) = 0\ \forall v \in \fspace{V}_0,\ \text{where}\ \fspace{V}_0 \coloneqq \{v \in \fspace{V} : b(v,u) = 0\ \forall u
+\in \fspace{U} \}.
+\end{align}
+
+Then by the Banach-Ne\v{c}as-Babu\v{s}ka theorem,
+\begin{align}
+||u||_{\fspace{U}} \le \frac{M}{\gamma} ||l||_{\fspace{V}'}.
+\end{align}
+
+Choosing finite dimensional subsets we have the discrete variational problem,
+\begin{align} \label{eq:bilinear_abstract_finite}
+\text{Find}\ u_h \in \fspace{U}_h\ \text{such that}\
+b(v_h,u_h) = l(v_h)\ \forall v_h \in \fspace{V}_h.
+\end{align}
+
+If a discrete version of the inf-sup condition holds,
+\begin{align} \label{eq:abstract_dpg_error}
+||u-u_h||_{\fspace{U}} \le \frac{M}{\gamma_h} \inf_{w_h \in \fspace{U}_h} ||u-w_h||_{\fspace{U}}.
+\end{align}
+
+Several points are now of note. First, it can be seen that the computed solution
+has an error proportional to the infimum of that of all possible discrete
+solutions \emph{in the trial space norm} set according to the continuity and
+inf-sup conditions. If the trial norm is given by the $\fspace{L}^2$ norm and
+the continuity and inf-sup constants are independent of the mesh size and
+solution regime, it is thus observed that the computed solution will converge
+optimally in the L2 norm. Second, a case of particular interest occurs when the
+continuity and inf-sup constants are equal
+\begin{align} \label{eq:equal_m_gamma}
+M = \gamma_h,
+\end{align}
+
+where the error incurred by the discrete approximation is smallest. It has been
+proven that
+
+\begin{align} \label{eq:bui_thanh_2-6}
+  b(v,u) \le ||v||_\fspace{V} ||u||_\fspace{U}\ \text{and}\
+ \exists v_u \in \fspace{V}\ \setminus \{0\} :
+b(v_u,u) = ||v_u||_{\fspace{V}} ||u||_{\fspace{U}}\ \forall u \in \fspace{U}
+\implies \gamma_h = 1\ (= M)
+\end{align}
+
+where $v_u$ is termed an optimal test function for the trial function $u$.
+Further, the recentrly formulated optimal trial Petrov-Galerkin (OPG)
+method has been devised to satisfy the requirements of
+this theorem~\cite{Brunken2018}.
+\iffalse
+Once a test norm is selected, we can define the map from trial to test space,
+$T: \fspace{U} \ni u \rightarrow Tu \coloneqq v_{Tu} \in \fspace{V} $,
+using the test space inner product, by
+\begin{align}
+(v, v_{Tu})_{\fspace{V}} = b(v,u),
+\end{align}
+
+such that the optimal test space, achieving
+the supremum in the discrete inf-sup constant, is given by the solution to the
+following linear system for each of the trial functions
+\begin{align} \label{eq:def_discrete_test_space_alt}
+\fspace{V}_\text{opt} = \{ v_{T u} \in \fspace{V} : u \in \fspace{U} \}.
+\end{align}
+
+In the discrete trial space, optimal test functions are determined according to
+\begin{align} \label{eq:auxiliary_opt_v}
+\text{Find}\ v_{T u_h} \in \fspace{V}\ \text{such that}\
+(w,v_{T u_h})_{\fspace{V}} = b(w,u_h),\ \forall w \in \fspace{V}.
+\end{align}
+
+Note that the continuous test space is still used above and that the specific
+choice of discrete test space must be made according to the \emph{practical}
+realization of the method.
+\fi
+With the above abstract framework in place, we now move
+on to a specific model problem providing a concrete realization of the concepts
+presented above. Consider the linear advection equation,
+
+\begin{alignat}{3}
+& \varv{b} \cdot \nabla \vars{u} = s\ && \text{in}\ \Omega, \label{eq:linear_advection_omega} \\
+& u = u_{\Gamma^{\text{-}}}\ && \text{on}\ \Gamma^{\text{-}} \coloneqq \{ \varv{x} \in \partial\Omega : \varv{\hat{n}} \cdot \vect{b} < 0 \}.
+\end{alignat}
+
+In the standard manner, we obtain the weak formulation where the bilinear and
+linear forms are defined by
+\begin{align} \label{eq:bilinear_pg_advection_jump}
+b(v,\varg{u})
+=\ \sum_{\fe{V}} \int_{\fe{V}} - \nabla v \cdot \varv{b} u\ d\omega
++ \sum_{\fe{F}} \int_{\fe{F}} \jump{v} f^*\ d\gamma,\
+l(v)
+=\ \sum_{\fe{V}} \int_{\fe{V}} v s\ d\omega.
+\end{align}
+
+The OPG method corresponds to making the choice of trial space norm as the
+$\fspace{L}^2$ norm and achieves unity continuity and inf-sup conditions.
+Applying Cauchy-Schwarz to the bilinear form
+\begin{align} \label{eq:cauchy_scwarz_advection}
+b(v,\varg{u})
+\le\ & \sum_{\fe{V}}
+|| - \nabla v \cdot \varv{b} ||_{L^2(\fe{V})} || u ||_{L^2(\fe{V})}
++
+||\jump{v}||_{L^2(\fe{F})} ||f^*||_{L^2(\fe{F})} \\
+\le\ &
+\underbrace{\left(
+\sum_{\fe{V}} || - \nabla v \cdot \varv{b} ||^2_{L^2(\fe{V})} + ||\jump{v}||^2_{L^2(\fe{F})}
+\right)^\frac{1}{2}}_{||v||_\fspace{V}}
+       \times
+\underbrace{\left(
+\sum_{\fe{V}} || u ||^2_{L^2(\fe{V})} + ||f^*||^2_{L^2(\fe{F})}
+\right)^\frac{1}{2}}_{||u||_\fspace{U}},
+\end{align}
+
+we naturally find that equality is obtained for the choice of test functions
+\begin{alignat}{3}
+u =\ & -\nabla v_u \cdot \vect{b}\quad && \text{in}\ \fe{V}, \\
+f^* =\ & \jump{v_u} && \text{on}\ \fe{F}.
+\end{alignat}
+
+Imposing sufficient conditions on the test space, notably regarding the
+selection of the discrete basis and the imposition of adjoint boundary
+conditions (on the outflow faces of the domain), we have
+\begin{align}
+  \exists\ \text{a unique}\ v_u \in \fspace{V}\ \text{such that}\ u = B^*v_u,\ \forall u \in \fspace{U}.
+\end{align}
+
+An equivalent problem to the original is then be obtained
+where now it is the test functions \emph{having global
+support} which are solved for and from which the solution is then computed
+through the application of the adjoint operator,
+\begin{align}
+& \text{Find}\ w_h(u_h) \in \fspace{V}_h\ \text{such that}\\
+& b(v_h,u_h) \coloneqq b(v_h,B^*w_h) \coloneqq (B^*v_h,B^*w_h) = l(v_h)\ \forall v_h \in \fspace{V}_h.
+\end{align}
+
+That the problem remains practical despite the global support of the test
+functions is in stark contrast to the necessary limited support for the test
+functions in the discontinuous Petrov-Galerkin (DPG) method~\cite{Demkowicz2010}
+which served as inspiration for this formulation. While the OPG method as
+presented above has the appearance of achieving the optimal stability which is
+the focus of this study, we note several open problems which we have encountered
+during our initial implementation:
+\begin{itemize}
+  \item The degree of the test space is required to be one higher than that of
+    the trial space, leading to a global system matrix corresponding to a
+    problem of one higher degree;
+  \item Simply imposing the physically motivated zero Dirichlet boundary
+    conditions along all outflow boundaries results in the values of the solution
+    being forced to be incorrect at certain points on the boundary
+    when a polynomial discrete test space is used. Thus even for the simple
+    problem of advection of a constant solution along a diagonal advection
+    field, all of the standard polynomial spaces typically used in finite
+    element contexts are overly restrictive.
+\end{itemize}
+
+We note that the additional stability provided by the method may provide a
+motivation for accepting the increased cost resulting from the higher degree of
+the test space representation. Further, we note that it may be possible to
+remedy the forcing of incorrect solution values resulting from the test space
+boundary conditions by extending the solution in a smooth manner outside of the
+domain, but that this will likely lead to complications in more complex
+settings. Finally, we expect to extend the OPG method to nonlinear equations
+(beginning with Burgers' equation) by solving a series of linearized problems
+around the most recently computed state.
+
+\bibliographystyle{ieeetr}
+\bibliography{../backmatter/global}
+
+\end{document}
